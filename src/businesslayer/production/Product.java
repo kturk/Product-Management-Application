@@ -1,15 +1,21 @@
 package businesslayer.production;
 
-import businesslayer.states.Complete;
 import businesslayer.states.NotStarted;
 import businesslayer.states.StatusState;
 
-public class Part implements Production{
+import java.util.*;
 
+public class Product implements Production{
+    List<Production> subTree;
     StatusState state;
 
-    public Part() {
+    public Product() {
+        this.subTree = new ArrayList<Production>();
         this.state = new NotStarted();
+    }
+
+    public Product(List<Production> subTree) {
+        this.subTree = subTree;
     }
 
     @Override
@@ -29,6 +35,10 @@ public class Part implements Production{
 
     @Override
     public boolean isCompleted() {
-        return this.state instanceof Complete;
+        for (Production p : subTree){
+            if (!p.isCompleted())
+                return false;
+        }
+        return true;
     }
 }
