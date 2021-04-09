@@ -3,33 +3,32 @@ package businesslayer.user;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Manager implements User{
-
-    List<User> userList;
-    String name;
+public class Manager extends User {
 
     public Manager(String name) {
-        this.userList = new ArrayList<User>();
-        this.name = name;
-    }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
-
-    public void addSubUser(User user){
-        this.userList.add(user);
+        super(name);
     }
 
     @Override
-    public void getSubUsers() {
-        System.out.println("Manager: " + this.name);
-        for(User aUser : this.userList){
-            aUser.getSubUsers();
+    public List<IUser> getUsers() {
+        List<IUser> tempUserList = new ArrayList<IUser>();
+        tempUserList.add(this);
+        for(IUser user : this.getUserList()){
+            tempUserList.addAll(user.getUsers());
         }
+        return tempUserList;
+    }
+
+    @Override
+    public IUser findUser(IUser user) {
+        if(user.equals(this))
+            return this;
+        for(IUser eachUser : this.getUserList()){
+            IUser currentUser = eachUser.findUser(user);
+            if(!currentUser.equals(null)){
+                return currentUser;
+            }
+        }
+        return null;
     }
 }

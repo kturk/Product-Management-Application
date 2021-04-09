@@ -2,26 +2,36 @@ package businesslayer.user;
 
 import businesslayer.production.Production;
 
-public class Employee implements User{
+import java.util.ArrayList;
+import java.util.List;
 
-    String name;
-    Production part;
+public class Employee extends User {
+
+    private Production part;
+
+    public Employee(String name, Production part) {
+        super(name);
+        this.part = part;
+    }
 
     public Employee(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        super(name);
+        this.part = null;
     }
 
     @Override
-    public void getSubUsers() {
-        System.out.println(this.name);
+    public List<IUser> getUsers() {
+        List<IUser> users = new ArrayList<IUser>();
+        users.add(this);
+        return users;
+    }
+
+    @Override
+    public IUser findUser(IUser user) {
+        if(this.equals(user))
+            return user;
+        else
+            return null;
     }
 
     public void nextStateForPart(){
