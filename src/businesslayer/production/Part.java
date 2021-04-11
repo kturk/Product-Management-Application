@@ -26,6 +26,11 @@ public class Part extends Production {
     }
 
     @Override
+    public StatusState checkAndUpdateTreeStatus() {
+        return this.getState();
+    }
+
+    @Override
     public List<IProduction> getAllTree() {
         List<IProduction> tempTree = new ArrayList<IProduction>();
         tempTree.add(this);

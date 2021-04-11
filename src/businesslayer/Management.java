@@ -4,6 +4,7 @@ import businesslayer.production.Assembly;
 import businesslayer.production.IProduction;
 import businesslayer.production.Part;
 import businesslayer.production.Product;
+import businesslayer.states.StatusState;
 import businesslayer.user.Admin;
 import businesslayer.user.Employee;
 import businesslayer.user.Manager;
@@ -301,7 +302,7 @@ public class Management {
                     case 1:
                         part.nextState();
                         IProduction product = this.admin.getRelatedProduct(part);
-                        System.out.println(product.getName());
+                        StatusState state = product.checkAndUpdateTreeStatus();
                         break;
                     case 2:
                         break;
