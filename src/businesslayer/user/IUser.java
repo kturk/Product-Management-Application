@@ -1,10 +1,12 @@
 package businesslayer.user;
 
+import businesslayer.production.IProduction;
+
 import java.util.List;
 
 public interface IUser {
 
-    public List<IUser> getUsers();
+    public List<IUser> getUserTree();
 
     public IUser findUser(IUser user);
 
@@ -13,4 +15,6 @@ public interface IUser {
     public int getId();
 
     public void addSubUser(IUser user);
+
+    public IProduction getProduction();
 }

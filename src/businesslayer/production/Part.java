@@ -3,13 +3,16 @@ package businesslayer.production;
 import businesslayer.states.Complete;
 import businesslayer.states.NotStarted;
 import businesslayer.states.StatusState;
+import businesslayer.user.IUser;
 
-public class Part implements Production{
+import java.util.ArrayList;
+import java.util.List;
 
-    StatusState state;
+public class Part extends Production {
 
-    public Part() {
-        this.state = new NotStarted();
+
+    public Part(String name) {
+        super(name);
     }
 
     @Override
@@ -18,17 +21,19 @@ public class Part implements Production{
     }
 
     @Override
-    public void nextState() {
-        this.state.next(this);
-    }
-
-    @Override
-    public void setState(StatusState state) {
-        this.state = state;
-    }
-
-    @Override
     public boolean isCompleted() {
-        return this.state instanceof Complete;
+        return this.getState() instanceof Complete;
+    }
+
+    @Override
+    public List<IProduction> getAllTree() {
+        List<IProduction> tempTree = new ArrayList<IProduction>();
+        tempTree.add(this);
+        return tempTree;
+    }
+
+    @Override //TODO THOR EXCEPTION
+    public void addProduction(IProduction production) {
+
     }
 }

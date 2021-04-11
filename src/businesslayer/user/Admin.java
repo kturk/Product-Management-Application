@@ -1,5 +1,7 @@
 package businesslayer.user;
 
+import businesslayer.production.IProduction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,11 +12,11 @@ public class Admin extends User{
     }
 
     @Override
-    public List<IUser> getUsers() {
+    public List<IUser> getUserTree() {
         List<IUser> tempUserList = new ArrayList<IUser>();
         tempUserList.add(this);
         for(IUser user : this.getUserList()){
-            tempUserList.addAll(user.getUsers());
+            tempUserList.addAll(user.getUserTree());
         }
         return tempUserList;
     }
@@ -29,6 +31,11 @@ public class Admin extends User{
                 return currentUser;
             }
         }
+        return null;
+    }
+
+    @Override //TODO THOR EXCEPTION
+    public IProduction getProduction() {
         return null;
     }
 }

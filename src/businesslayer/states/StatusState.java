@@ -1,8 +1,8 @@
 package businesslayer.states;
 
-import businesslayer.production.Production;
+import businesslayer.production.IProduction;
 
 public interface StatusState {
-    public void next(Production production);
-    public String getStatus(Production production);
+    public void next(IProduction production);
+    public String getStatus(IProduction production);
 }

@@ -1,20 +1,30 @@
 package businesslayer.user;
 
+import businesslayer.production.IProduction;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Manager extends User {
 
+    private IProduction product;
+
+    public Manager(String name, IProduction product) {
+        super(name);
+        this.product = product;
+    }
+
     public Manager(String name) {
         super(name);
+        this.product = null;
     }
 
     @Override
-    public List<IUser> getUsers() {
+    public List<IUser> getUserTree() {
         List<IUser> tempUserList = new ArrayList<IUser>();
         tempUserList.add(this);
         for(IUser user : this.getUserList()){
-            tempUserList.addAll(user.getUsers());
+            tempUserList.addAll(user.getUserTree());
         }
         return tempUserList;
     }
@@ -31,4 +41,11 @@ public class Manager extends User {
         }
         return null;
     }
+
+    @Override
+    public IProduction getProduction() {
+        return this.product;
+    }
+
+    //TODO ADDSUBUSER THOR EXCEPTION
 }

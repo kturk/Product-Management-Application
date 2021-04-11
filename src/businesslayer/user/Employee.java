@@ -1,15 +1,15 @@
 package businesslayer.user;
 
-import businesslayer.production.Production;
+import businesslayer.production.IProduction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Employee extends User {
 
-    private Production part;
+    private IProduction part;
 
-    public Employee(String name, Production part) {
+    public Employee(String name, IProduction part) {
         super(name);
         this.part = part;
     }
@@ -20,7 +20,7 @@ public class Employee extends User {
     }
 
     @Override
-    public List<IUser> getUsers() {
+    public List<IUser> getUserTree() {
         List<IUser> users = new ArrayList<IUser>();
         users.add(this);
         return users;
@@ -32,6 +32,11 @@ public class Employee extends User {
             return user;
         else
             return null;
+    }
+
+    @Override
+    public IProduction getProduction() {
+        return this.part;
     }
 
     public void nextStateForPart(){

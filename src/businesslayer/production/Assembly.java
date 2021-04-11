@@ -6,37 +6,39 @@ import businesslayer.states.StatusState;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Assembly implements Production{
+public class Assembly extends Production{
 
-    List<Production> subTree;
-    StatusState state;
-
-    public Assembly() {
-        this.subTree = new ArrayList<Production>();
-        this.state = new NotStarted();
+    public Assembly(String name) {
+        super(name);
     }
+
     @Override
     public void showTree() {
 
     }
 
     @Override
-    public void nextState() {
-        this.state.next(this);
-    }
-
-    @Override
-    public void setState(StatusState state) {
-        this.state = state;
-    }
-
-    @Override
     public boolean isCompleted() {
-        for (Production p : subTree){
+        for (IProduction p : this.getSubTree()){
             if (!p.isCompleted())
                 return false;
         }
         return true;
+    }
+
+    @Override
+    public List<IProduction> getAllTree() {
+        List<IProduction> tempTree = new ArrayList<IProduction>();
+        tempTree.add(this);
+        for(IProduction production : this.getSubTree()){
+            tempTree.addAll(production.getAllTree());
+        }
+        return tempTree;
+    }
+
+    @Override
+    public void addProduction(IProduction production) {
+        this.getSubTree().add(production);
     }
 
 }
