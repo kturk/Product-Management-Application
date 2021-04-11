@@ -49,4 +49,12 @@ public class Admin extends User{
         }
         return null;
     }
+
+    @Override
+    public void printSubUsers() {
+        System.out.println("|--" + this.getName());
+        for (IUser user : this.getUserList()){
+            user.printSubUsers();
+        }
+    }
 }

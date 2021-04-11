@@ -19,4 +19,6 @@ public interface IUser {
     public IProduction getProduction();
 
     public IProduction getRelatedProduct(IProduction production);
+
+    public void printSubUsers();
 }

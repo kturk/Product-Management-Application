@@ -58,5 +58,13 @@ public class Manager extends User {
         return null;
     }
 
+    @Override
+    public void printSubUsers() {
+        System.out.println("\t|--" + this.getName() + " -> " + this.getProduction().getName());
+        for (IUser user : this.getUserList()){
+            user.printSubUsers();
+        }
+    }
+
     //TODO ADDSUBUSER THOR EXCEPTION
 }

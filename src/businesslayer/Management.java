@@ -21,19 +21,20 @@ public class Management {
         this.view = new ProductManagementView();
         this.admin = initializeAdmin();
         Admin adminn = new Admin("Admin");
-        Product p = new Product("Computer");
+        Product p1 = new Product("Computer");
+        Product p2 = new Product("Book");
 
-        p.getSubTree().add(new Part("Cip"));
-        p.getSubTree().add(new Assembly("Anakart"));
+//        p.getSubTree().add(new Part("Cip"));
+//        p.getSubTree().add(new Assembly("Anakart"));
 
-        Manager manager1 = new Manager("Kemal", p);
+        Manager manager1 = new Manager("Kemal", p1);
 
 
-        Manager manager2 = new Manager("Arda");
+        Manager manager2 = new Manager("Arda", p2);
 
-        IUser employee1 = new Employee("Can");
-        IUser employee2 = new Employee("Hassan");
-        IUser employee3 = new Employee("Elman");
+        IUser employee1 = new Employee("Can", new Part("CIP"));
+        IUser employee2 = new Employee("Hassan", new Part("KABLO"));
+        IUser employee3 = new Employee("Elman", new Part("METAL"));
 
         adminn.addSubUser(manager1);
         adminn.addSubUser(manager2);
@@ -176,7 +177,6 @@ public class Management {
                     this.addPartScreen(manager);
                     break;
                 case 0:
-                    // logout
                     loop = false;
                     this.logout();
                     break;
@@ -319,8 +319,10 @@ public class Management {
 
     private void printSubUsers(IUser user){
         List<IUser> userList = user.getUserTree();
+//        List<IProduction> productionList = user.getProduction().getSubTree();
         for(IUser u : userList){
-            System.out.println(u.getName());
+            u.printSubUsers();
+//            System.out.println(u.getName());
         }
 
     }

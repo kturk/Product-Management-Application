@@ -46,6 +46,11 @@ public class Employee extends User {
         return null;
     }
 
+    @Override
+    public void printSubUsers() {
+        System.out.println("\t\t|--" + this.getName() + " -> " + this.getProduction().getName());
+    }
+
     public void nextStateForPart(){
 
     }
