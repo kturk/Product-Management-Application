@@ -38,4 +38,15 @@ public class Admin extends User{
     public IProduction getProduction() {
         return null;
     }
+
+    @Override
+    public IProduction getRelatedProduct(IProduction production) {
+        for (IUser user : this.getUserList()){
+            IProduction p = user.getRelatedProduct(production);
+            if (p != null){
+                return p;
+            }
+        }
+        return null;
+    }
 }

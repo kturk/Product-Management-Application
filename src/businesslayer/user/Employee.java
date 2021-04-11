@@ -39,6 +39,13 @@ public class Employee extends User {
         return this.part;
     }
 
+    @Override
+    public IProduction getRelatedProduct(IProduction production) {
+        if(production.equals(this.part))
+            return this.part;
+        return null;
+    }
+
     public void nextStateForPart(){
 
     }

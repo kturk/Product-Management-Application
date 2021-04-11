@@ -284,8 +284,37 @@ public class Management {
     }
 
     private void employeeScreen(IUser employee){
-        System.out.println("Employee Screen");
-
+//        System.out.println("Employee Screen");
+        boolean loop = true;
+        while(loop) {
+            IProduction part = employee.getProduction();
+            if (part.isCompleted()) {
+                this.view.partCompleteMessage();
+                loop = false;
+                this.logout();
+                break;
+            }
+            else {
+                this.view.promptEmployeeChoices(part);
+                int input = this.view.getIntInput();
+                switch (input) {
+                    case 1:
+                        part.nextState();
+                        IProduction product = this.admin.getRelatedProduct(part);
+                        System.out.println(product.getName());
+                        break;
+                    case 2:
+                        break;
+                    case 0:
+                        loop = false;
+                        this.logout();
+                        break;
+                    default:
+                        this.view.invalidId();
+                        break;
+                }
+            }
+        }
     }
 
     private void printSubUsers(IUser user){

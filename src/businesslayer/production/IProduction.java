@@ -14,5 +14,6 @@ public interface IProduction {
     public String getName();
     public int getId();
     public void addProduction(IProduction production);
+    public String getStateName();
 
     }

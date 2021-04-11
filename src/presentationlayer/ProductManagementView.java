@@ -1,5 +1,7 @@
 package presentationlayer;
 
+import businesslayer.production.IProduction;
+
 import java.util.Scanner;
 
 public class ProductManagementView {
@@ -71,6 +73,19 @@ public class ProductManagementView {
 //                + 								  "3 -> Add a product to a manager \n"
                 +  								  "0 -> Logout \n"
                 +                                 "Please enter a number between 0-3: ");
+    }
+
+    public void promptEmployeeChoices(IProduction part){
+        System.out.println("Would you like to move your part's (" + part.getName() + ") " + "status to next stage? \n"
+                +                                 "Current status is: " + part.getStateName() + "\n"
+                + 								  "1 -> Yes  \n"
+                +                                 "2 -> No  \n"
+                +  								  "0 -> Logout \n"
+                +                                 "Please enter a number between 0-2: ");
+    }
+
+    public void partCompleteMessage(){
+        System.out.println("The part assigned to you is already completed.");
     }
 
     public void promptAddPartChoices(){

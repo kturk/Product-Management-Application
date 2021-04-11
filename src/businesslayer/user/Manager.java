@@ -47,5 +47,16 @@ public class Manager extends User {
         return this.product;
     }
 
+    @Override
+    public IProduction getRelatedProduct(IProduction production) {
+        for (IUser user : this.getUserList()){
+            IProduction p = user.getRelatedProduct(production);
+            if (p != null){
+                return this.product;
+            }
+        }
+        return null;
+    }
+
     //TODO ADDSUBUSER THOR EXCEPTION
 }

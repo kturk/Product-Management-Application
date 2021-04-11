@@ -23,6 +23,7 @@ public class Assembly extends Production{
             if (!p.isCompleted())
                 return false;
         }
+        this.nextState();
         return true;
     }
 

@@ -17,4 +17,6 @@ public interface IUser {
     public void addSubUser(IUser user);
 
     public IProduction getProduction();
+
+    public IProduction getRelatedProduct(IProduction production);
 }

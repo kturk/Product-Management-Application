@@ -38,10 +38,15 @@ public abstract class Production implements IProduction{
         return subTree;
     }
 
+
     public StatusState getState() {
         return state;
     }
 
+    @Override
+    public String getStateName() {
+        return state.getClass().getSimpleName();
+    }
 
     @Override
     public void nextState() {
