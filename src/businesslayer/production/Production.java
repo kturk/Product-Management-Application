@@ -1,6 +1,7 @@
 package businesslayer.production;
 
 import businesslayer.states.Complete;
+import businesslayer.states.InProgress;
 import businesslayer.states.NotStarted;
 import businesslayer.states.StatusState;
 
@@ -56,6 +57,29 @@ public abstract class Production implements IProduction{
     @Override
     public void setState(StatusState state) {
         this.state = state;
+    }
+
+    @Override
+    public StatusState checkAndUpdateTreeStatus() {
+        boolean isComplete = true;
+        boolean isInProgress = false;
+        for(IProduction production : this.getSubTree()){
+            StatusState state = production.checkAndUpdateTreeStatus();
+            if(state instanceof InProgress){
+                isInProgress = true;
+                isComplete = false;
+                break;
+            }
+            else if(state instanceof Complete == false)
+                isComplete = false;
+        }
+        if(isComplete){
+            this.setState(new Complete());
+        }
+        else if(isInProgress){
+            this.setState(new InProgress());
+        }
+        return this.getState();
     }
 
 }

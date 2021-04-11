@@ -1,5 +1,7 @@
 package businesslayer.production;
 
+import businesslayer.states.Complete;
+import businesslayer.states.InProgress;
 import businesslayer.states.NotStarted;
 import businesslayer.states.StatusState;
 
@@ -23,7 +25,6 @@ public class Assembly extends Production{
             if (!p.isCompleted())
                 return false;
         }
-        this.nextState();
         return true;
     }
 

@@ -9,6 +9,7 @@ public interface IProduction {
     public void nextState();
     public void setState(StatusState state);
     public boolean isCompleted();
+    public StatusState checkAndUpdateTreeStatus();
     public List<IProduction> getSubTree();
     public List<IProduction> getAllTree();
     public String getName();
