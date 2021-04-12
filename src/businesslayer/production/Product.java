@@ -36,7 +36,7 @@ public class Product extends Production {
     @Override
     public void displayTree(IUser manager, int depth) {
         String tab = String.join("", Collections.nCopies(depth, "\t"));
-        System.out.println(tab +"|--" + manager.getName() + " -> " + this.getName() + " | " + this.getStateName());
+        System.out.println(tab +"|--" +  manager.getDisplayName() + " -> " + this.getName() + " | " + this.getStateName());
         for (IProduction p : this.getSubTree())
             p.displayTree(manager, depth+1);
     }

@@ -25,4 +25,5 @@ public interface IUser {
 
     public List<IUser> getUserList();
 
+    public String getDisplayName();
 }

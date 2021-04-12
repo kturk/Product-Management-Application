@@ -14,7 +14,7 @@ public abstract class User implements IUser{
     public User(String name) {
         this.id = count;
         count++;
-        this.name = "(" + this.getClass().getSimpleName() + ")" + " " + name;
+        this.name = name;
     }
 
     public User() {
@@ -22,7 +22,7 @@ public abstract class User implements IUser{
 
     public User(int id, String name) {
         this.id = id;
-        this.name = "(" + this.getClass().getSimpleName() + ")" + " " + name;
+        this.name = name;
     }
 
     @Override
@@ -40,5 +40,9 @@ public abstract class User implements IUser{
 
     @Override
     public abstract List<IUser> getUserList();
+
+    public String getDisplayName() {
+        return "(" + this.getClass().getSimpleName() + ")" + " " + this.getName();
+    }
 
 }

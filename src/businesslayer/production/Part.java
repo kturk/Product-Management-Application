@@ -8,6 +8,7 @@ import businesslayer.user.IUser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Part extends Production {
 
@@ -47,8 +48,8 @@ public class Part extends Production {
         String tab = String.join("", Collections.nCopies(depth, "\t"));
         List<IUser> employees = manager.getUserTree();
         for (IUser user : employees){
-            if  (user.getProduction().getId() == this.getId()) {
-                System.out.println(tab + "|--" + user.getName() + " -> " + this.getName() + " | " + this.getStateName());
+            if  (Objects.equals(user.getProduction(), this)) {
+                System.out.println(tab + "|--" + user.getDisplayName() + " -> " + this.getName() + " | " + this.getStateName());
                 break;
             }
         }

@@ -14,6 +14,10 @@ public class Admin extends User{
         super(name);
     }
 
+    public Admin(int id, String name) {
+        super(id, name);
+    }
+
     public Admin() {
     }
 
@@ -72,7 +76,7 @@ public class Admin extends User{
 
     @Override
     public void displayTree() throws UnauthorizedUserOperationException {
-        System.out.println("|--" + this.getName());
+        System.out.println("|--" + this.getDisplayName());
         for (IUser user : this.getUserList()){
             user.displayTree();
         }

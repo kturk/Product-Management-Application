@@ -39,8 +39,9 @@ public class DataHandler {
 //                .registerTypeAdapter(StatusState.class, interfaceSerializer(Complete.class))
 //                .registerTypeAdapter(StatusState.class, interfaceSerializer(InProgress.class))
 //                .registerTypeAdapter(StatusState.class, interfaceSerializer(NotStarted.class))
-                .registerTypeAdapter(StatusState.class, new StateSerializer())
-                .registerTypeAdapter(IProduction.class, new ProductSerializer())
+//                .registerTypeAdapter(StatusState.class, new StateSerializer())
+//                .registerTypeAdapter(IProduction.class, new ProductSerializer())
+                .registerTypeAdapter(Admin.class, new AdminSerializer())
                 .create();
         Admin admin = gson.fromJson(jsonString, Admin.class);
         return admin;

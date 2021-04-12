@@ -13,7 +13,20 @@
             "className": "Part"
           },
           "id": 4,
-          "name": "(Employee) E1"
+          "name": "Arda"
+        },
+        {
+          "part": {
+            "id": 5,
+            "subTree": [],
+            "state": {
+              "name": "NotStarted"
+            },
+            "name": "Klavye",
+            "className": "Part"
+          },
+          "id": 5,
+          "name": "Erdi"
         }
       ],
       "product": {
@@ -26,27 +39,36 @@
                 "id": 4,
                 "subTree": [],
                 "state": {
-                  "name": "NotStarted"
+                  "name": "Complete"
                 },
                 "name": "Part1",
                 "className": "Part"
               }
             ],
             "state": {
+              "name": "Complete"
+            },
+            "name": "Sembol",
+            "className": "Assembly"
+          },
+          {
+            "id": 5,
+            "subTree": [],
+            "state": {
               "name": "NotStarted"
             },
-            "name": "Arda",
-            "className": "Assembly"
+            "name": "Klavye",
+            "className": "Part"
           }
         ],
         "state": {
-          "name": "NotStarted"
+          "name": "InProgress"
         },
         "name": "PC",
         "className": "Product"
       },
       "id": 2,
-      "name": "(Manager) Kemal"
+      "name": "Kemal"
     },
     {
       "employeeList": [],
@@ -60,9 +82,9 @@
         "className": "Product"
       },
       "id": 3,
-      "name": "(Manager) Caner"
+      "name": "Caner"
     }
   ],
   "id": 1,
-  "name": "(Admin) Can"
+  "name": "Can"
 }

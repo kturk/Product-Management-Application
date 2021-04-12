@@ -41,6 +41,10 @@ public class Manager extends User implements IUser{
     public Manager() {
     }
 
+    public Manager(int id, String name) {
+        super(id, name);
+    }
+
     @Override
     public void addSubUser(IUser user) throws UnauthorizedUserOperationException {
         if (user instanceof Employee)

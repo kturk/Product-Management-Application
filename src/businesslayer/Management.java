@@ -94,7 +94,7 @@ public class Management {
 
     private void printUserList(List<IUser> userList){
         for(IUser user : userList){
-            view.printIdAndName(user.getId(), user.getName());
+            view.printIdAndName(user.getId(), user.getDisplayName());
         }
     }
 

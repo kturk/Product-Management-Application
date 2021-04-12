@@ -21,6 +21,11 @@ public class Employee extends User implements IUser{
         this.part = null;
     }
 
+    public Employee(int id, String name, Part part) {
+        super(id, name);
+        this.part = part;
+    }
+
     @Override
     public List<IUser> getUserTree() {
         List<IUser> users = new ArrayList<IUser>();
