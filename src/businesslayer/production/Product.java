@@ -11,11 +11,6 @@ public class Product extends Production {
     }
 
     @Override
-    public void showTree() {
-
-    }
-
-    @Override
     public boolean isCompleted() {
         for (IProduction p : this.getSubTree()){
             if (!p.isCompleted())

@@ -27,10 +27,6 @@ public class ProductManagementView {
         System.out.println("You have logged out successfully.");
     }
 
-    public void invalidInputLogin() {
-        System.out.println("Your input is invalid. Please enter a number.");
-    }
-
     public void invalidIntInput() {
         System.out.println("Please enter a valid number from the list.");
     }
@@ -46,15 +42,6 @@ public class ProductManagementView {
     public void getIdForAssemblyAddition(){
         System.out.println("Select an id to add the assembly under it.");
     }
-
-//    public void promptMainChoices(){
-//        System.out.println("What would you like to do? \n"
-//                +                                 "1 -> Add a team \n"
-//                + 								  "2 -> Remove a team \n"
-//                + 								  "3 -> Update a team \n"
-//                +  								  "0 -> Exit from the application \n"
-//                +                                 "Please enter a number between 0-3: ");
-//    }
 
     public void promptAdminChoices(){
         System.out.println("What would you like to do? \n"
@@ -86,15 +73,6 @@ public class ProductManagementView {
 
     public void partCompleteMessage(){
         System.out.println("The part assigned to you is already completed.");
-    }
-
-    public void promptAddPartChoices(){
-        System.out.println("What would you like to do? \n"
-                + 								  "1 -> Add a part and its employee directly to the product  \n"
-                +                                 "2 -> Add a part and its employee to an assembly  \n"
-                +                                 "3 -> Back  \n"
-                +  								  "0 -> Logout \n"
-                +                                 "Please enter a number between 0-3: ");
     }
 
     public void promptAddAssemblyChoices(){

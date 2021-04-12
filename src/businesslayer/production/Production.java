@@ -40,9 +40,13 @@ public abstract class Production implements IProduction{
         return subTree;
     }
 
-
     StatusState getState() {
         return state;
+    }
+
+    @Override
+    public void setState(StatusState state) {
+        this.state = state;
     }
 
     @Override
@@ -61,11 +65,6 @@ public abstract class Production implements IProduction{
     }
 
     @Override
-    public void setState(StatusState state) {
-        this.state = state;
-    }
-
-    @Override
     public StatusState checkAndUpdateTreeStatus() {
         boolean isComplete = true;
         boolean isInProgress = false;
@@ -76,7 +75,7 @@ public abstract class Production implements IProduction{
                 isComplete = false;
                 break;
             }
-            else if(state instanceof Complete == false)
+            else if(!(state instanceof Complete))
                 isComplete = false;
         }
         if(isComplete){
