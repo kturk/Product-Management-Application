@@ -8,10 +8,4 @@ public class NotStarted implements StatusState{
     public void next(IProduction production) {
         production.setState(new InProgress());
     }
-
-    @Override
-    public String getStatus(IProduction production) {
-        return null;
-    }
-
 }

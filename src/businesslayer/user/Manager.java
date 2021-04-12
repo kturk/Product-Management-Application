@@ -36,7 +36,7 @@ public class Manager extends User {
             return this;
         for(IUser eachUser : this.getUserList()){
             IUser currentUser = eachUser.findUser(user);
-            if(!currentUser.equals(null)){
+            if(currentUser != null){
                 return currentUser;
             }
         }

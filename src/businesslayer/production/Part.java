@@ -2,7 +2,6 @@ package businesslayer.production;
 
 import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.states.Complete;
-import businesslayer.states.NotStarted;
 import businesslayer.states.StatusState;
 import businesslayer.user.IUser;
 
@@ -15,11 +14,6 @@ public class Part extends Production {
 
     public Part(String name) {
         super(name);
-    }
-
-    @Override
-    public void showTree() {
-
     }
 
     @Override

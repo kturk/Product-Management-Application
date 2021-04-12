@@ -22,32 +22,6 @@ public class Management {
     public Management() {
         this.view = new ProductManagementView();
         this.admin = initializeAdmin();
-//        Admin adminn = new Admin("Admin");
-//        Product p1 = new Product("Computer");
-//        Product p2 = new Product("Book");
-//
-////        p.getSubTree().add(new Part("Cip"));
-////        p.getSubTree().add(new Assembly("Anakart"));
-//
-//        Manager manager1 = new Manager("Kemal", p1);
-//
-//
-//        Manager manager2 = new Manager("Arda", p2);
-//
-//        IUser employee1 = new Employee("Can", new Part("CIP"));
-//        IUser employee2 = new Employee("Hassan", new Part("KABLO"));
-//        IUser employee3 = new Employee("Elman", new Part("METAL"));
-//
-//        adminn.addSubUser(manager1);
-//        adminn.addSubUser(manager2);
-//
-//        manager1.addSubUser(employee1);
-//        manager1.addSubUser(employee2);
-//
-//        manager2.addSubUser(employee3);
-//        this.admin = adminn;
-
-
     }
 
     private IUser initializeAdmin(){
@@ -139,13 +113,11 @@ public class Management {
     }
 
     private void adminScreen(IUser admin){
-        System.out.println("Admin Screen");
         boolean loop = true;
         while(loop){
             this.view.promptAdminChoices();
 
             int input = this.view.getIntInput();
-
             switch (input) {
                 case 1:
                     this.printSubUsers(admin); break;
@@ -160,7 +132,6 @@ public class Management {
                     break;
             }
         }
-
     }
 
     private void managerScreen(IUser manager){
@@ -169,7 +140,6 @@ public class Management {
             this.view.promptManagerChoices();
 
             int input = this.view.getIntInput();
-
             switch (input) {
                 case 1:
                     this.printSubUsers(manager); break;
@@ -187,7 +157,6 @@ public class Management {
                     break;
             }
         }
-
     }
 
     private void addPartScreen(IUser manager){
@@ -204,29 +173,14 @@ public class Management {
             if(production != null && !production.getClass().getSimpleName().equals("Part")){
                 validation = true;
 
-                String partName = this.view.getNewPartInput();
-                String employeeName = this.view.getNewEmployeeInput();
-
-                IProduction part = new Part(partName);
-                IUser employee = new Employee(employeeName, part);
-
-                try {
-                    manager.addSubUser(employee);
-                    production.addProduction(part);
-                    this.view.printPartCreationSuccessful();
-                }
-                catch (UnauthorizedUserOperationException e){
-                    System.err.println(e);
-                }
+                addPartScreen(manager, production); // TODO
             }
             else
                 this.view.invalidIntInput();
         }
-
     }
 
     private void addPartScreen(IUser manager, IProduction production){
-
         String partName = this.view.getNewPartInput();
         String employeeName = this.view.getNewEmployeeInput();
 
@@ -239,20 +193,18 @@ public class Management {
             this.view.printPartCreationSuccessful();
         }
         catch (UnauthorizedUserOperationException e){
-            System.err.println(e);
+            e.printStackTrace();
         }
 
     }
 
     private void addAssemblyScreen(IUser manager){
-
         IProduction product = manager.getProduction();
         List<IProduction> productTree = product.getAllTree();
         this.view.getIdForAssemblyAddition();
         this.view.printIdAndName(product.getId(), product.getName());
         this.printAssemblyList(productTree);
 
-        // TODO CAN BE A METHOD
         boolean validation = false;
         while (!validation){
             int id = this.view.getIntInput();
@@ -279,10 +231,9 @@ public class Management {
                     this.view.printAssemblyCreationSuccessful();
                 }
                 catch (UnauthorizedUserOperationException e){
-                    System.err.println(e);
+                   e.printStackTrace();
                 }
             }
-
             this.view.promptAddAssemblyChoices();
             int input = this.view.getIntInput();
             switch (input) {
@@ -302,7 +253,6 @@ public class Management {
     }
 
     private void employeeScreen(IUser employee){
-//        System.out.println("Employee Screen");
         boolean loop = true;
         while(loop) {
             IProduction part = employee.getProduction();
@@ -340,7 +290,7 @@ public class Management {
             user.displayTree();
         }
         catch (UnauthorizedUserOperationException e){
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -355,7 +305,7 @@ public class Management {
             this.view.printManagerCreationSuccessful();
         }
         catch (UnauthorizedUserOperationException e){
-            System.err.println(e);
+            e.printStackTrace();
         }
     }
 

@@ -1,9 +1,5 @@
 package businesslayer.production;
 
-import businesslayer.states.Complete;
-import businesslayer.states.InProgress;
-import businesslayer.states.NotStarted;
-import businesslayer.states.StatusState;
 import businesslayer.user.IUser;
 
 import java.util.ArrayList;
@@ -14,11 +10,6 @@ public class Assembly extends Production{
 
     public Assembly(String name) {
         super(name);
-    }
-
-    @Override
-    public void showTree() {
-
     }
 
     @Override
