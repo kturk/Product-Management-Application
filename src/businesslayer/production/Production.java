@@ -1,5 +1,6 @@
 package businesslayer.production;
 
+import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.states.Complete;
 import businesslayer.states.InProgress;
 import businesslayer.states.NotStarted;
@@ -40,8 +41,13 @@ public abstract class Production implements IProduction{
     }
 
 
-    public StatusState getState() {
+    StatusState getState() {
         return state;
+    }
+
+    @Override
+    public void addProduction(IProduction production) throws UnauthorizedUserOperationException {
+        this.getSubTree().add(production);
     }
 
     @Override

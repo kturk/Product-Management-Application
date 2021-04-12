@@ -1,5 +1,6 @@
 package businesslayer;
 
+import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.production.Assembly;
 import businesslayer.production.IProduction;
 import businesslayer.production.Part;
@@ -21,30 +22,30 @@ public class Management {
     public Management() {
         this.view = new ProductManagementView();
         this.admin = initializeAdmin();
-        Admin adminn = new Admin("Admin");
-        Product p1 = new Product("Computer");
-        Product p2 = new Product("Book");
-
-//        p.getSubTree().add(new Part("Cip"));
-//        p.getSubTree().add(new Assembly("Anakart"));
-
-        Manager manager1 = new Manager("Kemal", p1);
-
-
-        Manager manager2 = new Manager("Arda", p2);
-
-        IUser employee1 = new Employee("Can", new Part("CIP"));
-        IUser employee2 = new Employee("Hassan", new Part("KABLO"));
-        IUser employee3 = new Employee("Elman", new Part("METAL"));
-
-        adminn.addSubUser(manager1);
-        adminn.addSubUser(manager2);
-
-        manager1.addSubUser(employee1);
-        manager1.addSubUser(employee2);
-
-        manager2.addSubUser(employee3);
-        this.admin = adminn;
+//        Admin adminn = new Admin("Admin");
+//        Product p1 = new Product("Computer");
+//        Product p2 = new Product("Book");
+//
+////        p.getSubTree().add(new Part("Cip"));
+////        p.getSubTree().add(new Assembly("Anakart"));
+//
+//        Manager manager1 = new Manager("Kemal", p1);
+//
+//
+//        Manager manager2 = new Manager("Arda", p2);
+//
+//        IUser employee1 = new Employee("Can", new Part("CIP"));
+//        IUser employee2 = new Employee("Hassan", new Part("KABLO"));
+//        IUser employee3 = new Employee("Elman", new Part("METAL"));
+//
+//        adminn.addSubUser(manager1);
+//        adminn.addSubUser(manager2);
+//
+//        manager1.addSubUser(employee1);
+//        manager1.addSubUser(employee2);
+//
+//        manager2.addSubUser(employee3);
+//        this.admin = adminn;
 
 
     }
@@ -52,8 +53,7 @@ public class Management {
     private IUser initializeAdmin(){
         this.view.printEnterAdmin();
         String adminName = this.view.getStringInput();
-        IUser admin = new Admin(adminName);
-        return admin;
+        return new Admin(adminName);
     }
 
     public void start(){
@@ -68,17 +68,25 @@ public class Management {
         List<IUser> userList = this.admin.getUserTree();
 
         this.printUserList(userList);
-
+        this.view.promptExitChoice();
         boolean validation = false;
         while (!validation){
             int userId = this.view.getIntInput();
+            this.exitProgram(userId);
             IUser loggedUser = getUser(userList, userId);
             if(loggedUser != null){
                 validation = true;
                 this.roleChooser(loggedUser);
             }
             else
-                this.view.invalidId();
+                this.view.invalidIntInput();
+        }
+    }
+
+    private void exitProgram(int choice) {
+        if (choice == 0) {
+            this.view.exitMessage();
+            System.exit(0);
         }
     }
 
@@ -126,7 +134,6 @@ public class Management {
             case "Employee":
                 this.employeeScreen(user); break;
             default:
-                //TODO WHAT IS THIS
                 break;
         }
     }
@@ -141,20 +148,15 @@ public class Management {
 
             switch (input) {
                 case 1:
-                    //TODO USERS AND PRODUCT TREES
                     this.printSubUsers(admin); break;
                 case 2:
                     this.addManager(admin); break;
-//                case 3: // TODO UPDATE
-//                    // add product
-//                    break;
                 case 0:
-                    // logout
                     loop = false;
                     this.logout();
                     break;
                 default:
-                    //TODO ADMIN DEFAULT
+                    this.view.invalidIntInput();
                     break;
             }
         }
@@ -170,7 +172,6 @@ public class Management {
 
             switch (input) {
                 case 1:
-                    //TODO USERS AND PRODUCT TREES
                     this.printSubUsers(manager); break;
                 case 2:
                     this.addAssemblyScreen(manager); break;
@@ -182,7 +183,7 @@ public class Management {
                     this.logout();
                     break;
                 default:
-                    //TODO ADMIN DEFAULT
+                    this.view.invalidIntInput();
                     break;
             }
         }
@@ -209,12 +210,17 @@ public class Management {
                 IProduction part = new Part(partName);
                 IUser employee = new Employee(employeeName, part);
 
-                manager.addSubUser(employee);
-                production.addProduction(part);
-                this.view.printPartCreationSuccessful();
+                try {
+                    manager.addSubUser(employee);
+                    production.addProduction(part);
+                    this.view.printPartCreationSuccessful();
+                }
+                catch (UnauthorizedUserOperationException e){
+                    System.err.println(e);
+                }
             }
             else
-                this.view.invalidId();
+                this.view.invalidIntInput();
         }
 
     }
@@ -227,10 +233,14 @@ public class Management {
         IProduction part = new Part(partName);
         IUser employee = new Employee(employeeName, part);
 
-        manager.addSubUser(employee);
-        production.addProduction(part);
-        this.view.printPartCreationSuccessful();
-
+        try{
+            manager.addSubUser(employee);
+            production.addProduction(part);
+            this.view.printPartCreationSuccessful();
+        }
+        catch (UnauthorizedUserOperationException e){
+            System.err.println(e);
+        }
 
     }
 
@@ -242,7 +252,6 @@ public class Management {
         this.view.printIdAndName(product.getId(), product.getName());
         this.printAssemblyList(productTree);
 
-        int input = 1;
         // TODO CAN BE A METHOD
         boolean validation = false;
         while (!validation){
@@ -253,19 +262,26 @@ public class Management {
                 this.addAssemblyOrPart(manager, production);
             }
             else
-                this.view.invalidId();
+                this.view.invalidIntInput();
         }
     }
 
     private void addAssemblyOrPart(IUser manager, IProduction production){
-
-        boolean validation = false;
-
-        while (!validation){
-            String assemblyName = this.view.getNewAssemblyInput();
-            IProduction newAssembly = new Assembly(assemblyName);
-            production.addProduction(newAssembly);
-            this.view.printAssemblyCreationSuccessful();
+        IProduction newAssembly = null;
+        boolean loop = false;
+        boolean validation = true;
+        while (!loop){
+            if (validation){
+                String assemblyName = this.view.getNewAssemblyInput();
+                newAssembly = new Assembly(assemblyName);
+                try {
+                    production.addProduction(newAssembly);
+                    this.view.printAssemblyCreationSuccessful();
+                }
+                catch (UnauthorizedUserOperationException e){
+                    System.err.println(e);
+                }
+            }
 
             this.view.promptAddAssemblyChoices();
             int input = this.view.getIntInput();
@@ -274,11 +290,12 @@ public class Management {
                     production = newAssembly;
                     break;
                 case 2:
-                    validation = true;
+                    loop = true;
                     this.addPartScreen(manager, newAssembly);
                     break;
                 default:
-                    this.view.invalidId();
+                    this.view.invalidIntInput();
+                    validation = false;
                     break;
             }
         }
@@ -311,21 +328,20 @@ public class Management {
                         this.logout();
                         break;
                     default:
-                        this.view.invalidId();
+                        this.view.invalidIntInput();
                         break;
                 }
             }
         }
     }
 
-    private void printSubUsers(IUser user){
-        List<IUser> userList = user.getUserTree();
-//        List<IProduction> productionList = user.getProduction().getSubTree();
-        for(IUser u : userList){
-            u.printSubUsers();
-//            System.out.println(u.getName());
+    private void printSubUsers(IUser user) {
+        try {
+            user.displayTree();
         }
-
+        catch (UnauthorizedUserOperationException e){
+            System.err.println(e);
+        }
     }
 
     private void addManager(IUser admin){
@@ -333,18 +349,14 @@ public class Management {
         String newProductName = this.view.getNewProductInput();
         IProduction product = new Product(newProductName);
         IUser newManager = new Manager(newManagerName, product);
-        admin.addSubUser(newManager);
-        this.view.printManagerCreationSuccessful();
+
+        try{
+            admin.addSubUser(newManager);
+            this.view.printManagerCreationSuccessful();
+        }
+        catch (UnauthorizedUserOperationException e){
+            System.err.println(e);
+        }
     }
-
-
-
-    //TODO UPDATE
-//    private void addProduct(IUser admin){
-//        List<IUser> managerList = admin.getUserList();
-//    }
-
-
-
 
 }

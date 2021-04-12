@@ -1,5 +1,6 @@
 package businesslayer.user;
 
+import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.production.IProduction;
 
 import java.util.ArrayList;
@@ -47,11 +48,12 @@ public class Employee extends User {
     }
 
     @Override
-    public void printSubUsers() {
-        System.out.println("\t\t|--" + this.getName() + " -> " + this.getProduction().getName());
+    public void displayTree() throws UnauthorizedUserOperationException {
+        throw new UnauthorizedUserOperationException();
     }
 
-    public void nextStateForPart(){
-
+    @Override
+    public void addSubUser(IUser user) throws UnauthorizedUserOperationException {
+        throw new UnauthorizedUserOperationException();
     }
 }

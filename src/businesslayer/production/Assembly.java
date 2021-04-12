@@ -4,8 +4,10 @@ import businesslayer.states.Complete;
 import businesslayer.states.InProgress;
 import businesslayer.states.NotStarted;
 import businesslayer.states.StatusState;
+import businesslayer.user.IUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Assembly extends Production{
@@ -39,8 +41,11 @@ public class Assembly extends Production{
     }
 
     @Override
-    public void addProduction(IProduction production) {
-        this.getSubTree().add(production);
+    public void displayTree(IUser manager, int depth) {
+        String tab = String.join("", Collections.nCopies(depth, "\t"));
+        System.out.println(tab + "|--Assembly" + " -> " + this.getName() + " | " + this.getStateName());
+        for (IProduction p : this.getSubTree())
+            p.displayTree(manager, depth+1);
     }
 
 }

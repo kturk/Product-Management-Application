@@ -1,16 +1,11 @@
 package businesslayer.production;
 
-import businesslayer.states.Complete;
-import businesslayer.states.InProgress;
-import businesslayer.states.NotStarted;
-import businesslayer.states.StatusState;
 import businesslayer.user.IUser;
 
 import java.util.*;
 
 public class Product extends Production {
 
-    //TODO CAN BE PROTECTED
     public Product(String name) {
         super(name);
     }
@@ -40,8 +35,11 @@ public class Product extends Production {
     }
 
     @Override
-    public void addProduction(IProduction production) {
-        this.getSubTree().add(production);
+    public void displayTree(IUser manager, int depth) {
+        String tab = String.join("", Collections.nCopies(depth, "\t"));
+        System.out.println(tab +"|--" + manager.getName() + " -> " + this.getName() + " | " + this.getStateName());
+        for (IProduction p : this.getSubTree())
+            p.displayTree(manager, depth+1);
     }
 
 

@@ -1,5 +1,6 @@
 package businesslayer.user;
 
+import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.production.IProduction;
 
 import java.util.ArrayList;
@@ -27,14 +28,14 @@ public class Admin extends User{
             return this;
         for(IUser eachUser : this.getUserList()){
             IUser currentUser = eachUser.findUser(user);
-            if(!currentUser.equals(null)){
+            if(currentUser != null){
                 return currentUser;
             }
         }
         return null;
     }
 
-    @Override //TODO THOR EXCEPTION
+    @Override
     public IProduction getProduction() {
         return null;
     }
@@ -51,10 +52,10 @@ public class Admin extends User{
     }
 
     @Override
-    public void printSubUsers() {
+    public void displayTree() throws UnauthorizedUserOperationException {
         System.out.println("|--" + this.getName());
         for (IUser user : this.getUserList()){
-            user.printSubUsers();
+            user.displayTree();
         }
     }
 }

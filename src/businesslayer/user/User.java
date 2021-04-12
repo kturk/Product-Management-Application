@@ -1,5 +1,7 @@
 package businesslayer.user;
 
+import businesslayer.exceptions.UnauthorizedUserOperationException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public abstract class User implements IUser{
     public User(String name) {
         this.id = count;
         count++;
-        this.name = name;
+        this.name = "(" + this.getClass().getSimpleName() + ")" + " " + name;
         this.userList = new ArrayList<IUser>();
     }
 
@@ -32,7 +34,7 @@ public abstract class User implements IUser{
     }
 
     @Override
-    public void addSubUser(IUser user){
+    public void addSubUser(IUser user) throws UnauthorizedUserOperationException {
         this.userList.add(user);
     }
 

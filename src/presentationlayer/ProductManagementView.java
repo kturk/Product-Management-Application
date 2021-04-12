@@ -16,7 +16,7 @@ public class ProductManagementView {
     }
 
     public void printEnterAdmin() {
-        System.out.println("Please enter the name of the admin: ");
+        System.out.println("Please enter a name for the system admin initialization: ");
     }
 
     public void printLogin() {
@@ -31,8 +31,8 @@ public class ProductManagementView {
         System.out.println("Your input is invalid. Please enter a number.");
     }
 
-    public void invalidId() {
-        System.out.println("Please enter a valid id from the list.");
+    public void invalidIntInput() {
+        System.out.println("Please enter a valid number from the list.");
     }
 
     public void printIdAndName(int id, String name) {
@@ -169,5 +169,9 @@ public class ProductManagementView {
 
     public void exitMessage() {
         System.out.println("Thank you for using Product Management Application.");
+    }
+
+    public void promptExitChoice() {
+        System.out.println("0 - To completely exit from program.");
     }
 }
