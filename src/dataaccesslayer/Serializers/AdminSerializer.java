@@ -1,18 +1,13 @@
-package dataaccesslayer;
+package dataaccesslayer.Serializers;
 
 import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.production.*;
-import businesslayer.states.Complete;
-import businesslayer.states.InProgress;
-import businesslayer.states.NotStarted;
-import businesslayer.states.StatusState;
 import businesslayer.user.Admin;
 import businesslayer.user.Employee;
 import businesslayer.user.Manager;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

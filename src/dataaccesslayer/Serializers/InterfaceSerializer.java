@@ -1,4 +1,4 @@
-package dataaccesslayer;
+package dataaccesslayer.Serializers;
 
 import com.google.gson.*;
 

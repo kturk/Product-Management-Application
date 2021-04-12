@@ -1,4 +1,4 @@
-package dataaccesslayer;
+package dataaccesslayer.Serializers;
 
 import businesslayer.states.Complete;
 import businesslayer.states.InProgress;

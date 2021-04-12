@@ -1,13 +1,9 @@
-package dataaccesslayer;
+package dataaccesslayer.Serializers;
 
 import businesslayer.production.Assembly;
 import businesslayer.production.IProduction;
 import businesslayer.production.Part;
 import businesslayer.production.Product;
-import businesslayer.states.Complete;
-import businesslayer.states.InProgress;
-import businesslayer.states.NotStarted;
-import businesslayer.states.StatusState;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
