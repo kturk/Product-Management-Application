@@ -10,13 +10,11 @@ public abstract class User implements IUser{
     private static int count = 1;
     private int id;
     private String name;
-    private List<IUser> userList;
 
     public User(String name) {
         this.id = count;
         count++;
         this.name = "(" + this.getClass().getSimpleName() + ")" + " " + name;
-        this.userList = new ArrayList<IUser>();
     }
 
     public User() {
@@ -25,12 +23,6 @@ public abstract class User implements IUser{
     public User(int id, String name) {
         this.id = id;
         this.name = "(" + this.getClass().getSimpleName() + ")" + " " + name;
-        this.userList = new ArrayList<IUser>();
-    }
-
-    @Override
-    public List<IUser> getUserList() {
-        return userList;
     }
 
     @Override
@@ -44,8 +36,9 @@ public abstract class User implements IUser{
     }
 
     @Override
-    public void addSubUser(IUser user) throws UnauthorizedUserOperationException {
-        this.userList.add(user);
-    }
+    public abstract void addSubUser(IUser user) throws UnauthorizedUserOperationException;
+
+    @Override
+    public abstract List<IUser> getUserList();
 
 }

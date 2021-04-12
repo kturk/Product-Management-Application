@@ -2,15 +2,17 @@ package businesslayer.user;
 
 import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.production.IProduction;
+import businesslayer.production.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Manager extends User {
+public class Manager extends User implements IUser{
 
-    private IProduction product;
+    private List<Employee> employeeList = new ArrayList<>();
+    private Product product;
 
-    public Manager(String name, IProduction product) {
+    public Manager(String name, Product product) {
         super(name);
         this.product = product;
     }
@@ -18,6 +20,31 @@ public class Manager extends User {
     public Manager(String name) {
         super(name);
         this.product = null;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    public IProduction getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Manager() {
+    }
+
+    @Override
+    public void addSubUser(IUser user) throws UnauthorizedUserOperationException {
+        if (user instanceof Employee)
+            this.employeeList.add((Employee) user);
     }
 
     @Override
@@ -62,6 +89,11 @@ public class Manager extends User {
     @Override
     public void displayTree() throws UnauthorizedUserOperationException {
         this.product.displayTree(this, 1);
+    }
+
+    @Override
+    public List<IUser> getUserList() {
+        return new ArrayList<>(this.employeeList);
     }
 
 }

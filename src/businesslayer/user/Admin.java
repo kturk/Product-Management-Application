@@ -8,8 +8,27 @@ import java.util.List;
 
 public class Admin extends User{
 
+    List<Manager> managerList = new ArrayList<>();
+
     public Admin(String name) {
         super(name);
+    }
+
+    public Admin() {
+    }
+
+    @Override
+    public void addSubUser(IUser user) throws UnauthorizedUserOperationException {
+        if (user instanceof Manager)
+            this.managerList.add((Manager) user);
+    }
+
+    public List<Manager> getManagerList() {
+        return managerList;
+    }
+
+    public void setManagerList(List<Manager> managerList) {
+        this.managerList = managerList;
     }
 
     @Override
@@ -57,5 +76,10 @@ public class Admin extends User{
         for (IUser user : this.getUserList()){
             user.displayTree();
         }
+    }
+
+    @Override
+    public List<IUser> getUserList() {
+        return new ArrayList<>(this.managerList);
     }
 }

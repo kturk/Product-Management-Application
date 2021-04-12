@@ -2,15 +2,16 @@ package businesslayer.user;
 
 import businesslayer.exceptions.UnauthorizedUserOperationException;
 import businesslayer.production.IProduction;
+import businesslayer.production.Part;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employee extends User {
+public class Employee extends User implements IUser{
 
-    private IProduction part;
+    private Part part;
 
-    public Employee(String name, IProduction part) {
+    public Employee(String name, Part part) {
         super(name);
         this.part = part;
     }
@@ -50,6 +51,11 @@ public class Employee extends User {
     @Override
     public void displayTree() throws UnauthorizedUserOperationException {
         throw new UnauthorizedUserOperationException();
+    }
+
+    @Override
+    public List<IUser> getUserList() {
+        return null;
     }
 
     @Override

@@ -28,19 +28,21 @@ public class DataHandler {
         FileIOManager fileIOManager = new FileIOManager();
         String jsonString = fileIOManager.readJson(this.filePath);
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(IUser.class, interfaceSerializer(Admin.class))
-                .registerTypeAdapter(IUser.class, interfaceSerializer(Manager.class))
-                .registerTypeAdapter(IUser.class, interfaceSerializer(Employee.class))
-
-                .registerTypeAdapter(IProduction.class, interfaceSerializer(Product.class))
-                .registerTypeAdapter(IProduction.class, interfaceSerializer(Assembly.class))
-                .registerTypeAdapter(IProduction.class, interfaceSerializer(Part.class))
-
-                .registerTypeAdapter(StatusState.class, interfaceSerializer(Complete.class))
-                .registerTypeAdapter(StatusState.class, interfaceSerializer(InProgress.class))
-                .registerTypeAdapter(StatusState.class, interfaceSerializer(NotStarted.class))
+//                .registerTypeAdapter(IUser.class, interfaceSerializer(Admin.class))
+//                .registerTypeAdapter(IUser.class, interfaceSerializer(Manager.class))
+//                .registerTypeAdapter(IUser.class, interfaceSerializer(Employee.class))
+//
+//                .registerTypeAdapter(IProduction.class, interfaceSerializer(Product.class))
+//                .registerTypeAdapter(IProduction.class, interfaceSerializer(Assembly.class))
+//                .registerTypeAdapter(IProduction.class, interfaceSerializer(Part.class))
+//
+//                .registerTypeAdapter(StatusState.class, interfaceSerializer(Complete.class))
+//                .registerTypeAdapter(StatusState.class, interfaceSerializer(InProgress.class))
+//                .registerTypeAdapter(StatusState.class, interfaceSerializer(NotStarted.class))
+                .registerTypeAdapter(StatusState.class, new StateSerializer())
+                .registerTypeAdapter(IProduction.class, new ProductSerializer())
                 .create();
-        IUser admin = gson.fromJson(jsonString, Admin.class);
+        Admin admin = gson.fromJson(jsonString, Admin.class);
         return admin;
     }
 

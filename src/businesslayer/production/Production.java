@@ -16,6 +16,7 @@ public abstract class Production implements IProduction{
     private List<IProduction> subTree;
     private StatusState state;
     private String name;
+    private String className = this.getClass().getSimpleName();
 
     public Production(String name) {
         this.id = count;

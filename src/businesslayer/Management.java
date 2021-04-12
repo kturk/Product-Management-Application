@@ -206,7 +206,7 @@ public class Management {
         String partName = this.view.getNewPartInput();
         String employeeName = this.view.getNewEmployeeInput();
 
-        IProduction part = new Part(partName);
+        Part part = new Part(partName);
         IUser employee = new Employee(employeeName, part);
 
         try{
@@ -319,7 +319,7 @@ public class Management {
     private void addManager(IUser admin){
         String newManagerName = this.view.getNewUserInput();
         String newProductName = this.view.getNewProductInput();
-        IProduction product = new Product(newProductName);
+        Product product = new Product(newProductName);
         IUser newManager = new Manager(newManagerName, product);
 
         try{

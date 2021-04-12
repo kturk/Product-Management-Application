@@ -16,6 +16,10 @@ public class Part extends Production {
         super(name);
     }
 
+    public Part(int id, String name) {
+        super(id, name);
+    }
+
     @Override
     public boolean isCompleted() {
         return this.getState() instanceof Complete;
@@ -43,7 +47,7 @@ public class Part extends Production {
         String tab = String.join("", Collections.nCopies(depth, "\t"));
         List<IUser> employees = manager.getUserTree();
         for (IUser user : employees){
-            if  (user.getProduction().equals(this)) {
+            if  (user.getProduction().getId() == this.getId()) {
                 System.out.println(tab + "|--" + user.getName() + " -> " + this.getName() + " | " + this.getStateName());
                 break;
             }

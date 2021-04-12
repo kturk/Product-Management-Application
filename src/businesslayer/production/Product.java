@@ -10,6 +10,10 @@ public class Product extends Production {
         super(name);
     }
 
+    public Product(int id, String name) {
+        super(id, name);
+    }
+
     @Override
     public boolean isCompleted() {
         for (IProduction p : this.getSubTree()){

@@ -24,4 +24,5 @@ public interface IUser {
     public void displayTree() throws UnauthorizedUserOperationException;
 
     public List<IUser> getUserList();
+
 }

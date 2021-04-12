@@ -1,0 +1,68 @@
+{
+  "managerList": [
+    {
+      "employeeList": [
+        {
+          "part": {
+            "id": 4,
+            "subTree": [],
+            "state": {
+              "name": "NotStarted"
+            },
+            "name": "Part1",
+            "className": "Part"
+          },
+          "id": 4,
+          "name": "(Employee) E1"
+        }
+      ],
+      "product": {
+        "id": 1,
+        "subTree": [
+          {
+            "id": 3,
+            "subTree": [
+              {
+                "id": 4,
+                "subTree": [],
+                "state": {
+                  "name": "NotStarted"
+                },
+                "name": "Part1",
+                "className": "Part"
+              }
+            ],
+            "state": {
+              "name": "NotStarted"
+            },
+            "name": "Arda",
+            "className": "Assembly"
+          }
+        ],
+        "state": {
+          "name": "NotStarted"
+        },
+        "name": "PC",
+        "className": "Product"
+      },
+      "id": 2,
+      "name": "(Manager) Kemal"
+    },
+    {
+      "employeeList": [],
+      "product": {
+        "id": 2,
+        "subTree": [],
+        "state": {
+          "name": "NotStarted"
+        },
+        "name": "Mouse",
+        "className": "Product"
+      },
+      "id": 3,
+      "name": "(Manager) Caner"
+    }
+  ],
+  "id": 1,
+  "name": "(Admin) Can"
+}

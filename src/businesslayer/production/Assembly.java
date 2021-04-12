@@ -8,6 +8,10 @@ import java.util.List;
 
 public class Assembly extends Production{
 
+    public Assembly(int id, String name) {
+        super(id, name);
+    }
+
     public Assembly(String name) {
         super(name);
     }
