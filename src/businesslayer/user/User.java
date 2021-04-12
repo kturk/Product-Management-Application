@@ -19,6 +19,16 @@ public abstract class User implements IUser{
         this.userList = new ArrayList<IUser>();
     }
 
+    public User() {
+    }
+
+    public User(int id, String name) {
+        this.id = id;
+        this.name = "(" + this.getClass().getSimpleName() + ")" + " " + name;
+        this.userList = new ArrayList<IUser>();
+    }
+
+    @Override
     public List<IUser> getUserList() {
         return userList;
     }

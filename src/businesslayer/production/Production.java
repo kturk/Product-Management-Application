@@ -25,6 +25,16 @@ public abstract class Production implements IProduction{
         this.name = name;
     }
 
+    public Production() {
+    }
+
+    public Production(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.subTree = new ArrayList<IProduction>();
+        this.state = new NotStarted();
+    }
+
     @Override
     public int getId() {
         return id;

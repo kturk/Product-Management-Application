@@ -22,4 +22,6 @@ public interface IUser {
     public IProduction getRelatedProduct(IProduction production);
 
     public void displayTree() throws UnauthorizedUserOperationException;
+
+    public List<IUser> getUserList();
 }

@@ -10,24 +10,35 @@ import businesslayer.user.Admin;
 import businesslayer.user.Employee;
 import businesslayer.user.Manager;
 import businesslayer.user.IUser;
+import dataaccesslayer.DataHandler;
 import presentationlayer.ProductManagementView;
 
 import java.util.List;
 
 public class Management {
 
+    private static final String path = "admin.json";
+
     private IUser admin;
     private ProductManagementView view;
+    private DataHandler dataHandler;
 
     public Management() {
+        this.dataHandler = new DataHandler(path);
         this.view = new ProductManagementView();
         this.admin = initializeAdmin();
+
     }
 
     private IUser initializeAdmin(){
-        this.view.printEnterAdmin();
-        String adminName = this.view.getStringInput();
-        return new Admin(adminName);
+        IUser admin = this.getAdminFromJson();
+        if(admin == null){
+            this.view.printEnterAdmin();
+            String adminName = this.view.getStringInput();
+            return new Admin(adminName);
+        }
+        return admin;
+
     }
 
     public void start(){
@@ -35,6 +46,16 @@ public class Management {
         this.login();
 
     }
+
+    private IUser getAdminFromJson(){
+        IUser admin = this.dataHandler.readJson();
+        return admin;
+    }
+
+    private void writeJson(){
+        this.dataHandler.writeJson(this.admin);
+    }
+
 
     private void login(){
         this.view.printLogin();
@@ -65,6 +86,7 @@ public class Management {
     }
 
     private void logout(){
+        this.writeJson();
         this.view.printLogout();
         this.login();
     }
