@@ -37,7 +37,6 @@ public final class StateSerializer
                 state = new Complete();
                 break;
             default:
-                state = null;
                 break;
         }
         return state;

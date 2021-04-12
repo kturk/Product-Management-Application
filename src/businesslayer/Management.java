@@ -24,17 +24,17 @@ public class Management {
     private DataHandler dataHandler;
 
     public Management() {
-        this.dataHandler = new DataHandler(path);
-        this.view = new ProductManagementView();
-        this.admin = initializeAdmin();
+        dataHandler = new DataHandler(path);
+        view = new ProductManagementView();
+        admin = initializeAdmin();
 
     }
 
     private IUser initializeAdmin(){
-        IUser admin = this.getAdminFromJson();
+        IUser admin = getAdminFromJson();
         if(admin == null){
-            this.view.printEnterAdmin();
-            String adminName = this.view.getStringInput();
+            view.printEnterAdmin();
+            String adminName = view.getStringInput();
             return new Admin(adminName);
         }
         return admin;
@@ -42,66 +42,66 @@ public class Management {
     }
 
     public void start(){
-        this.view.printWelcome();
-        this.login();
+        view.printWelcome();
+        login();
 
     }
 
     private IUser getAdminFromJson(){
-        IUser admin = this.dataHandler.readJson();
+        IUser admin = dataHandler.readJson();
         return admin;
     }
 
     private void writeJson(){
-        this.dataHandler.writeJson(this.admin);
+        dataHandler.writeJson(admin);
     }
 
 
     private void login(){
-        this.view.printLogin();
+        view.printLogin();
 
-        List<IUser> userList = this.admin.getUserTree();
+        List<IUser> userList = admin.getUserTree();
 
-        this.printUserList(userList);
-        this.view.promptExitChoice();
+        printUserList(userList);
+        view.promptExitChoice();
         boolean validation = false;
         while (!validation){
-            int userId = this.view.getIntInput();
-            this.exitProgram(userId);
+            int userId = view.getIntInput();
+            exitProgram(userId);
             IUser loggedUser = getUser(userList, userId);
             if(loggedUser != null){
                 validation = true;
-                this.roleChooser(loggedUser);
+                roleChooser(loggedUser);
             }
             else
-                this.view.invalidIntInput();
+                view.invalidIntInput();
         }
     }
 
     private void exitProgram(int choice) {
         if (choice == 0) {
-            this.view.exitMessage();
+            view.exitMessage();
             System.exit(0);
         }
     }
 
     private void logout(){
-        this.writeJson();
-        this.view.printLogout();
-        this.login();
+        writeJson();
+        view.printLogout();
+        login();
     }
 
 
     private void printUserList(List<IUser> userList){
         for(IUser user : userList){
-            this.view.printIdAndName(user.getId(), user.getName());
+            view.printIdAndName(user.getId(), user.getName());
         }
     }
 
     private void printAssemblyList(List<IProduction> productTree){
         for(IProduction production : productTree){
             if(production.getClass().getSimpleName().equals("Assembly"))
-                this.view.printIdAndName(production.getId(), production.getName());
+                view.printIdAndName(production.getId(), production.getName());
         }
     }
 
@@ -124,11 +124,11 @@ public class Management {
         String userType = user.getClass().getSimpleName();
         switch (userType) {
             case "Admin":
-                this.adminScreen(user); break;
+                adminScreen(user); break;
             case "Manager":
-                this.managerScreen(user); break;
+                managerScreen(user); break;
             case "Employee":
-                this.employeeScreen(user); break;
+                employeeScreen(user); break;
             default:
                 break;
         }
@@ -137,20 +137,20 @@ public class Management {
     private void adminScreen(IUser admin){
         boolean loop = true;
         while(loop){
-            this.view.promptAdminChoices();
+            view.promptAdminChoices();
 
-            int input = this.view.getIntInput();
+            int input = view.getIntInput();
             switch (input) {
                 case 1:
-                    this.printSubUsers(admin); break;
+                    printSubUsers(admin); break;
                 case 2:
-                    this.addManager(admin); break;
+                    addManager(admin); break;
                 case 0:
                     loop = false;
-                    this.logout();
+                    logout();
                     break;
                 default:
-                    this.view.invalidIntInput();
+                    view.invalidIntInput();
                     break;
             }
         }
@@ -159,23 +159,23 @@ public class Management {
     private void managerScreen(IUser manager){
         boolean loop = true;
         while(loop){
-            this.view.promptManagerChoices();
+            view.promptManagerChoices();
 
-            int input = this.view.getIntInput();
+            int input = view.getIntInput();
             switch (input) {
                 case 1:
-                    this.printSubUsers(manager); break;
+                    printSubUsers(manager); break;
                 case 2:
-                    this.addAssemblyScreen(manager); break;
+                    addAssemblyScreen(manager); break;
                 case 3:
-                    this.addPartScreen(manager);
+                    addPartScreen(manager);
                     break;
                 case 0:
                     loop = false;
-                    this.logout();
+                    logout();
                     break;
                 default:
-                    this.view.invalidIntInput();
+                    view.invalidIntInput();
                     break;
             }
         }
@@ -184,27 +184,27 @@ public class Management {
     private void addPartScreen(IUser manager){
         IProduction product = manager.getProduction();
         List<IProduction> productTree = product.getAllTree();
-        this.view.getIdForPartAddition();
-        this.view.printIdAndName(product.getId(), product.getName());
-        this.printAssemblyList(productTree);
+        view.getIdForPartAddition();
+        view.printIdAndName(product.getId(), product.getName());
+        printAssemblyList(productTree);
 
         boolean validation = false;
         while (!validation){
-            int id = this.view.getIntInput();
-            IProduction production = this.getProduction(productTree, id);
+            int id = view.getIntInput();
+            IProduction production = getProduction(productTree, id);
             if(production != null && !production.getClass().getSimpleName().equals("Part")){
                 validation = true;
 
                 addPartScreen(manager, production); // TODO
             }
             else
-                this.view.invalidIntInput();
+                view.invalidIntInput();
         }
     }
 
     private void addPartScreen(IUser manager, IProduction production){
-        String partName = this.view.getNewPartInput();
-        String employeeName = this.view.getNewEmployeeInput();
+        String partName = view.getNewPartInput();
+        String employeeName = view.getNewEmployeeInput();
 
         Part part = new Part(partName);
         IUser employee = new Employee(employeeName, part);
@@ -212,7 +212,7 @@ public class Management {
         try{
             manager.addSubUser(employee);
             production.addProduction(part);
-            this.view.printPartCreationSuccessful();
+            view.printPartCreationSuccessful();
         }
         catch (UnauthorizedUserOperationException e){
             e.printStackTrace();
@@ -223,20 +223,20 @@ public class Management {
     private void addAssemblyScreen(IUser manager){
         IProduction product = manager.getProduction();
         List<IProduction> productTree = product.getAllTree();
-        this.view.getIdForAssemblyAddition();
-        this.view.printIdAndName(product.getId(), product.getName());
-        this.printAssemblyList(productTree);
+        view.getIdForAssemblyAddition();
+        view.printIdAndName(product.getId(), product.getName());
+        printAssemblyList(productTree);
 
         boolean validation = false;
         while (!validation){
-            int id = this.view.getIntInput();
-            IProduction production = this.getProduction(productTree, id);
+            int id = view.getIntInput();
+            IProduction production = getProduction(productTree, id);
             if(production != null && !production.getClass().getSimpleName().equals("Part")){
                 validation = true;
-                this.addAssemblyOrPart(manager, production);
+                addAssemblyOrPart(manager, production);
             }
             else
-                this.view.invalidIntInput();
+                view.invalidIntInput();
         }
     }
 
@@ -246,28 +246,28 @@ public class Management {
         boolean validation = true;
         while (!loop){
             if (validation){
-                String assemblyName = this.view.getNewAssemblyInput();
+                String assemblyName = view.getNewAssemblyInput();
                 newAssembly = new Assembly(assemblyName);
                 try {
                     production.addProduction(newAssembly);
-                    this.view.printAssemblyCreationSuccessful();
+                    view.printAssemblyCreationSuccessful();
                 }
                 catch (UnauthorizedUserOperationException e){
                    e.printStackTrace();
                 }
             }
-            this.view.promptAddAssemblyChoices();
-            int input = this.view.getIntInput();
+            view.promptAddAssemblyChoices();
+            int input = view.getIntInput();
             switch (input) {
                 case 1:
                     production = newAssembly;
                     break;
                 case 2:
                     loop = true;
-                    this.addPartScreen(manager, newAssembly);
+                    addPartScreen(manager, newAssembly);
                     break;
                 default:
-                    this.view.invalidIntInput();
+                    view.invalidIntInput();
                     validation = false;
                     break;
             }
@@ -279,28 +279,28 @@ public class Management {
         while(loop) {
             IProduction part = employee.getProduction();
             if (part.isCompleted()) {
-                this.view.partCompleteMessage();
+                view.partCompleteMessage();
                 loop = false;
-                this.logout();
+                logout();
                 break;
             }
             else {
-                this.view.promptEmployeeChoices(part);
-                int input = this.view.getIntInput();
+                view.promptEmployeeChoices(part);
+                int input = view.getIntInput();
                 switch (input) {
                     case 1:
                         part.nextState();
-                        IProduction product = this.admin.getRelatedProduct(part);
+                        IProduction product = admin.getRelatedProduct(part);
                         StatusState state = product.checkAndUpdateTreeStatus();
                         break;
                     case 2:
                         break;
                     case 0:
                         loop = false;
-                        this.logout();
+                        logout();
                         break;
                     default:
-                        this.view.invalidIntInput();
+                        view.invalidIntInput();
                         break;
                 }
             }
@@ -317,14 +317,14 @@ public class Management {
     }
 
     private void addManager(IUser admin){
-        String newManagerName = this.view.getNewUserInput();
-        String newProductName = this.view.getNewProductInput();
+        String newManagerName = view.getNewUserInput();
+        String newProductName = view.getNewProductInput();
         Product product = new Product(newProductName);
         IUser newManager = new Manager(newManagerName, product);
 
         try{
             admin.addSubUser(newManager);
-            this.view.printManagerCreationSuccessful();
+            view.printManagerCreationSuccessful();
         }
         catch (UnauthorizedUserOperationException e){
             e.printStackTrace();
